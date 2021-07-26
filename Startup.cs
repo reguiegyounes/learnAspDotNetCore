@@ -28,7 +28,8 @@ namespace WebApplication3
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    var myProccess = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+                    await context.Response.WriteAsync(myProccess);
                 });
             });
         }
