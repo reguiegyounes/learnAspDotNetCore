@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication3
 {
@@ -22,24 +23,32 @@ namespace WebApplication3
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    var myProccess = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
-                    var envVar=configuration["key1"];
-                    await context.Response.WriteAsync(envVar);
-                });
+            app.Use( async (context,next) => {
+                logger.LogInformation("middleware 01 : start");
+                await next();
+                logger.LogInformation("middleware 01 : end");
             });
+
+            app.Use(async (context, next) => {
+                logger.LogInformation("middleware 02 : start");
+                await next();
+                logger.LogInformation("middleware 02 : end");
+            });
+
+            app.Run(async (context) => {
+                logger.LogInformation("middleware 03 : start");
+                await context.Response.WriteAsync("hello to middleware 03");
+                logger.LogInformation("middleware 03 : end");
+            });
+
         }
     }
 }
