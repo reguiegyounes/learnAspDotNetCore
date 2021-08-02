@@ -20,6 +20,7 @@ namespace WebApplication3
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(option => option.EnableEndpointRouting = false ) ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,26 +30,20 @@ namespace WebApplication3
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles();
 
-            app.Use( async (context,next) => {
-                logger.LogInformation("middleware 01 : start");
-                await next();
-                logger.LogInformation("middleware 01 : end");
+            app.UseFileServer();
+
+            //app.UseMvcWithDefaultRoute(); default route : home/index/{id?}
+            app.UseMvc(routes=> {
+                routes.MapRoute("default","{controller=page}/{action=index}/{id?}");
             });
 
-            app.Use(async (context, next) => {
-                logger.LogInformation("middleware 02 : start");
-                await next();
-                logger.LogInformation("middleware 02 : end");
-            });
-
+            
             app.Run(async (context) => {
-                logger.LogInformation("middleware 03 : start");
-                await context.Response.WriteAsync("hello to middleware 03");
-                logger.LogInformation("middleware 03 : end");
+                await context.Response.WriteAsync("Hello World !!");
             });
 
         }
     }
 }
+ 
