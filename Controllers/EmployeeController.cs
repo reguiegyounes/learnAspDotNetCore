@@ -5,10 +5,10 @@ namespace learnAspDotNetCore.Controllers
 {
     public class EmployeeController
     {
-        private  ICompanyRepository<Employee> _employee;
-        public EmployeeController()
+        private readonly ICompanyRepository<Employee> _employee;
+        public EmployeeController(ICompanyRepository<Employee> employee)
         {
-            _employee = new EmployeeRepository();
+            _employee = employee;
         }
 
         public string Index(int id)

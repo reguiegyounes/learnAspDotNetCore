@@ -1,3 +1,5 @@
+using learnAspDotNetCore.Models.Repositories;
+using learnAspDotNetCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +23,7 @@ namespace WebApplication3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false ) ;
+            services.AddSingleton<ICompanyRepository<Employee>, EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
