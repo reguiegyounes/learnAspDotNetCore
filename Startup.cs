@@ -33,11 +33,8 @@ namespace WebApplication3
 
             app.UseFileServer();
 
-            //app.UseMvcWithDefaultRoute(); default route : home/index/{id?}
-            app.UseMvc(routes=> {
-                routes.MapRoute("default","{controller=page}/{action=index}/{id?}");
-            });
-
+            app.UseMvcWithDefaultRoute();     // default route : {controller=home}/{action=index}/{id?}
+            
             
             app.Run(async (context) => {
                 await context.Response.WriteAsync("Hello World !!");
