@@ -1,33 +1,30 @@
 ﻿@using learnAspDotNetCore.Models
 @model IEnumerable<Employee>
-<DOCTYPE html>
-<html>
-     <head>
-        <title>Employees List</title>
-    </head>
-    <body>
-        <table border=1>
-            <thead>
+
+@{ 
+    Layout = "_Layout";
+    ViewBag.Title = "List of Employees | Employees";
+}
+<table border=1>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Departement</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(Employee item in Model)
+            {
                 <tr>
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Departement</td>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Departement</td>
                 </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach(Employee item in Model)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Name</td>
-                            <td>@item.Email</td>
-                            <td>@item.Departement</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </body>
-</html>
+            }
+        }
+    </tbody>
+</table>

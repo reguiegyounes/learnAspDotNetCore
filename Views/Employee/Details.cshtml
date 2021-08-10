@@ -1,13 +1,11 @@
 ﻿@using learnAspDotNetCore.Models
 @model Employee
 
-<DOCTYPE html>
-<html>
-     <head>
-        <title>Employee Page | Details</title>
-    </head>
-    <body>
-        <h1>Details </h1>
-        name : @Model.Name
-    </body>
-</html>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Details | Employees";
+}
+
+
+<h1>Details </h1>
+name : @Model.Name
