@@ -1,11 +1,16 @@
-﻿namespace learnAspDotNetCore.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace learnAspDotNetCore.Controllers
 {
-    public class HomeController
+    public class HomeController : Controller
     {
-        public string index()
+        public IActionResult Index()
         {
-            return "Home controller , index action";
+            return View();
         }
     }
 }
-

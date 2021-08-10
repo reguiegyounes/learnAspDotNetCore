@@ -17,5 +17,10 @@ namespace learnAspDotNetCore.Models.Repositories
         {
             return _employees.SingleOrDefault(emp => emp.Id == id); ;
         }
+
+        public IEnumerable<Employee> GetAll()
+        {
+            return _employees;
+        }
     }
 }

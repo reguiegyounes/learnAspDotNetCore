@@ -1,9 +1,11 @@
 ﻿using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace learnAspDotNetCore.Controllers
 {
-    public class EmployeeController
+    public class EmployeeController:Controller
     {
         private readonly ICompanyRepository<Employee> _employee;
         public EmployeeController(ICompanyRepository<Employee> employee)
@@ -11,10 +13,18 @@ namespace learnAspDotNetCore.Controllers
             _employee = employee;
         }
 
-        public string Index(int id)
+        public ViewResult Index()
         {
-            return _employee.Get(id).Name;
+            IEnumerable<Employee> employees = _employee.GetAll();
+            return View(employees);
         }
-       
+
+        public ViewResult Details()
+        {
+            object name = "younes";
+            Employee emp = _employee.Get(1);
+            return View(emp);
+        }
+
     }
 }

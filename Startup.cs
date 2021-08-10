@@ -1,5 +1,5 @@
-using learnAspDotNetCore.Models.Repositories;
 using learnAspDotNetCore.Models;
+using learnAspDotNetCore.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplication3
+namespace learnAspDotNetCore
 {
     public class Startup
     {
@@ -35,10 +35,9 @@ namespace WebApplication3
             }
 
             app.UseFileServer();
-
             app.UseMvcWithDefaultRoute();     // default route : {controller=home}/{action=index}/{id?}
-            
-            
+           
+
             app.Run(async (context) => {
                 await context.Response.WriteAsync("Hello World !!");
             });
