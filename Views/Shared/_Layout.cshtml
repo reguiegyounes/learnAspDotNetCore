@@ -2,11 +2,20 @@
 <html>
      <head>
         <title>@ViewBag.Title</title>
+        @if (IsSectionDefined("styleCSS"))
+        {
+            @RenderSection("styleCSS",true)
+        }
+        
     </head>
     <body>
         @RenderBody()
         <footer>
             &copy; Reg_YNS
         </footer>
+        @if (IsSectionDefined("js"))
+        {
+            @RenderSection("js",true)
+        }
     </body>
 </html>

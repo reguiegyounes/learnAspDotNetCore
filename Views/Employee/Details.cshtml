@@ -7,5 +7,15 @@
 }
 
 
-<h1>Details </h1>
+<h1 class="title">Details </h1>
 name : @Model.Name
+
+
+@section styleCSS{
+    <link href="~/Styles/Employee/StyleDetails.css" rel="stylesheet">
+}
+@section js{
+    <script type="text/javascript">
+        console.log("Details")
+    </script>
+}
