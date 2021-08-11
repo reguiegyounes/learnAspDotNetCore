@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+     @if (IsSectionDefined("styleCSS"))
+        {
+            @RenderSection("styleCSS",true)
+        }
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    <h6>myLayout</h6>
+    @if (IsSectionDefined("js"))
+        {
+            @RenderSection("js",true)
+        }
+</body>
+</html>
