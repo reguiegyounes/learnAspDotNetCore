@@ -35,7 +35,12 @@ namespace learnAspDotNetCore
             }
 
             app.UseFileServer();
-            app.UseMvcWithDefaultRoute();     // default route : {controller=home}/{action=index}/{id?}
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Employee}/{action=Index}/{id?}"
+                );
+            });    
            
 
             app.Run(async (context) => {
