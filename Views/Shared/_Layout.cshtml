@@ -1,22 +1,13 @@
 ﻿<DOCTYPE html>
 <html>
      <head>
-        <title>@ViewBag.Title</title>
-        @if (IsSectionDefined("styleCSS"))
-        {
-            @RenderSection("styleCSS",true)
-        }
-        
+        <title>@ViewBag.Title | Employees Managment</title>
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-            @RenderBody()
-        
-        <footer>
-            &copy; Reg_YNS
-        </footer>
-        @if (IsSectionDefined("js"))
-        {
-            @RenderSection("js",true)
-        }
+        <div class="container">
+             @RenderBody()
+        </div>
+           
     </body>
 </html>

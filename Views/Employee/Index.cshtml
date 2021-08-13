@@ -1,28 +1,29 @@
 ﻿@model IEnumerable<Employee>
 
 @{ 
-    ViewBag.Title = "List of Employees | Employees";
+    ViewBag.Title = "Employees";
 }
-<table border=1>
-    <thead>
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Departement</td>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            foreach(Employee item in Model)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td>@item.Email</td>
-                    <td>@item.Departement</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+
+<div class="alert alert-info my-5 text-center">List Of Employees</div>
+<div class="row">
+    @foreach(Employee item in Model)
+    {
+        <div class="col-12 col-sm-6 mb-2 col-lg-4">
+            <div  class="card">
+                <img src="@item.ImageUrl" alt="@item.Name" class="card-img-top" width="50" height=210 style="object-fit: cover"/>
+                <div class="card-body text-center">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">
+                        @item.Email<br/>
+                        @item.Departement
+                    </p>
+                    <div class="text-white">
+                        <a class="btn btn-sm btn-primary">Details</a>
+                        <a class="btn btn-sm my-auto btn-secondary">Edit</a>
+                        <a class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

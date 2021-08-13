@@ -19,10 +19,9 @@ namespace learnAspDotNetCore.Controllers
             return View(employees);
         }
 
-        public ViewResult Details()
+        public ViewResult Details(int? id)
         {
-            object name = "younes";
-            Employee emp = _employee.Get(1);
+            Employee emp = _employee.Get(id ?? 1);
             return View(emp);
         }
 
