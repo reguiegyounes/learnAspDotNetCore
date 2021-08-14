@@ -8,17 +8,21 @@
 <h1>Details </h1>
 
 
-<div class="col-12">
-    <div  class="card" style="width:18rem">
-        <img src="@Model.ImageUrl" alt="@Model.Name" class="card-img-top" width="50" height=210 style="object-fit: cover"/>
-        <div class="card-body text-center">
-            <h5 class="card-title">@Model.Name</h5>
-            <p class="card-text">
-                @Model.Email<br/>
-                @Model.Departement
-            </p>
-            <div class="text-white">
-                <a class="btn btn-sm btn-dark" asp-action="Index" asp-controller="Employee">Back</a>
+<div class="row my-5">
+    <div class="col-12 mx-auto">
+        <div  class="card">
+            <h5 class="card-header text-danger display-3 text-center">@Model.Name</h5>
+            <div class="text-center">
+                <img asp-append-version="true" src="@Model.ImageUrl" alt="@Model.Name" class="card-img-top" style="width:40%;height:40%; object-fit: cover"/>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text display-4">
+                    <span class="text text-info">@Model.Departement</span> <br/>
+                    @Model.Email
+                </p>
+                <div class="text-white">
+                    <a class="btn btn-sm btn-dark" asp-action="Index" asp-controller="Employee">Back to list</a>
+                </div>
             </div>
         </div>
     </div>

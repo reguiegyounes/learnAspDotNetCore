@@ -1,8 +1,20 @@
 ﻿<DOCTYPE html>
 <html>
      <head>
-        <title>@ViewBag.Title | Employees Managment</title>
-        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <title>@ViewBag.Title | Employees Management</title>
+        <environment include="Development">
+            <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        </environment>
+        <environment include="Production,Staging">
+            <link   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+                    rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" 
+                    crossorigin="anonymous"
+                    asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+                    asp-fallback-test-class="sr-only"
+                    asp-fallback-test-property="position"
+                    asp-fallback-test-value="abslute"
+                    asp-suppress-fallback-integrity="true">
+        </environment>
     </head>
     <body>
         <div class="container">
