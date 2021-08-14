@@ -1,15 +1,28 @@
 ﻿@model Employee
 
 @{
-    ViewBag.Title = "Details | Employees";
+    ViewBag.Title = "Details";
 }
 
 
 <h1>Details </h1>
-ID : @Model.Id </br>
-Name : @Model.Name </br>
-Email : @Model.Email </br>
-Departement : @Model.Departement </br>
+
+
+<div class="col-12">
+    <div  class="card" style="width:18rem">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="card-img-top" width="50" height=210 style="object-fit: cover"/>
+        <div class="card-body text-center">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">
+                @Model.Email<br/>
+                @Model.Departement
+            </p>
+            <div class="text-white">
+                <a class="btn btn-sm btn-dark" asp-action="Index" asp-controller="Employee">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

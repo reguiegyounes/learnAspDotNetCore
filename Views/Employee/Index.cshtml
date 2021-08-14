@@ -18,9 +18,9 @@
                         @item.Departement
                     </p>
                     <div class="text-white">
-                        <a class="btn btn-sm btn-primary">Details</a>
-                        <a class="btn btn-sm my-auto btn-secondary">Edit</a>
-                        <a class="btn btn-sm btn-danger">Delete</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Details" asp-controller="Employee" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-sm my-auto btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </div>
                 </div>
             </div>

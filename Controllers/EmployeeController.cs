@@ -19,8 +19,12 @@ namespace learnAspDotNetCore.Controllers
             return View(employees);
         }
 
-        public ViewResult Details(int? id)
+        public IActionResult Details(int? id)
         {
+            if (id is null)
+            {
+                return RedirectToAction("Index");
+            }
             Employee emp = _employee.Get(id ?? 1);
             return View(emp);
         }
