@@ -6,5 +6,6 @@ namespace learnAspDotNetCore.Models.Repositories
     {
         TEntity Get(int id); 
         IEnumerable<Employee> GetAll();
+        TEntity Add(TEntity entity);
     }
 }

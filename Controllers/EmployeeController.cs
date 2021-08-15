@@ -28,9 +28,16 @@ namespace learnAspDotNetCore.Controllers
             Employee emp = _employee.Get(id ?? 1);
             return View(emp);
         }
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Employee employee)
+        {
+            _employee.Add(employee);
+            return RedirectToAction("Details",new {id=employee.Id });
         }
     }
 }

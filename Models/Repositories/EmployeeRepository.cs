@@ -15,6 +15,18 @@ namespace learnAspDotNetCore.Models.Repositories
                 new Employee() {Id = 4, Name ="serine",Email="serine@email.com",Departement=Departement.Web ,ImageUrl="/Images/4.jpg"}
             };
         }
+
+        public Employee Add(Employee employee)
+        {
+            employee.Id= _employees.Max(emp => emp.Id + 1);
+            if (employee.ImageUrl is null)
+            {
+                employee.ImageUrl = "/images/default.png";
+            }
+            _employees.Add(employee);
+            return employee;
+        }
+
         public Employee Get(int id)
         {
             return _employees.SingleOrDefault(emp => emp.Id == id); ;
