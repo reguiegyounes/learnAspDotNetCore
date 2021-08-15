@@ -7,10 +7,12 @@
     <div class="col-md-6">
         <label class="form-label" asp-for="Name"></label>
         <input type="text" class="form-control" asp-for="Name">
+        <span asp-validation-for="Name" class="small text-danger"></span>
     </div>
     <div class="col-md-6">
         <label class="form-label" asp-for="Email"></label>
         <input type="email" class="form-control" asp-for="Email">
+        <span asp-validation-for="Email" class="small text-danger"></span>
     </div>
         
     <div class="col-md-4">
