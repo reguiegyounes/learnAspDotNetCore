@@ -28,6 +28,9 @@ namespace learnAspDotNetCore.Controllers
             Employee emp = _employee.Get(id ?? 1);
             return View(emp);
         }
-
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
