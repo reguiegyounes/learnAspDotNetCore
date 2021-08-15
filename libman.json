@@ -7,6 +7,7 @@
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
         "js/bootstrap.min.js",
+        "js/bootstrap.min.js.map",
         "css/bootstrap.min.css",
         "css/bootstrap.min.css.map"
       ]
