@@ -15,6 +15,8 @@ namespace learnAspDotNetCore.Models
         public string Email { get; set; }
 
         public string ImageUrl { get; set; }
-        public Departement Departement { get; set; }
+
+        [Required]
+        public Departement? Departement { get; set; }
     }
 }

@@ -18,9 +18,12 @@
     <div class="col-md-4">
         <label class="form-label" asp-for="Departement"></label>
         <select class="form-select" asp-for="Departement" asp-items="Html.GetEnumSelectList<Departement>()">
+            <option value="">Select Departement</option>
         </select>
+        <span asp-validation-for="Departement" class="small text-danger"></span>
     </div>
     <div class="col-12 my-2">
         <button type="submit" class="btn btn-primary">Add</button>
     </div>
+    <div class="text text-danger" asp-validation-summary="All"></div>
 </form>
