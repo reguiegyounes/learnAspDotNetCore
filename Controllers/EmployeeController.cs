@@ -41,7 +41,6 @@ namespace learnAspDotNetCore.Controllers
                 _employee.Add(employee);
                 return RedirectToAction("Details", new { id = employee.Id });
             }
-            ViewBag.Error = "Please fill all information !!";
             return View();
         }
     }
