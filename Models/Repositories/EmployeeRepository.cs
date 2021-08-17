@@ -27,6 +27,16 @@ namespace learnAspDotNetCore.Models.Repositories
             return employee;
         }
 
+        public Employee delete(int id)
+        {
+            var employee=_employees.Find(emp=>emp.Id==id);
+            if (employee != null)
+            {
+                _employees.Remove(employee);
+            }
+            return employee;
+        }
+
         public Employee Get(int id)
         {
             return _employees.SingleOrDefault(emp => emp.Id == id); ;
@@ -35,6 +45,20 @@ namespace learnAspDotNetCore.Models.Repositories
         public IEnumerable<Employee> GetAll()
         {
             return _employees;
+        }
+
+        public Employee update(Employee entity)
+        {
+            var employee = _employees.Find(emp => emp.Id == entity.Id);
+            if (employee != null)
+            {
+                employee.Id=entity.Id;
+                employee.Name=entity.Name;
+                employee.Email=entity.Email;
+                employee.ImageUrl=entity.ImageUrl;
+                employee.Departement=entity.Departement;
+            }
+            return employee;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace learnAspDotNetCore
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("EmployeeDbConnection")));
             services.AddMvc(option => option.EnableEndpointRouting = false ) ;
-            services.AddSingleton<ICompanyRepository<Employee>, EmployeeRepository>();
+            services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
