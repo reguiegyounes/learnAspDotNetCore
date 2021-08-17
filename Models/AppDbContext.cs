@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using learnAspDotNetCore.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace learnAspDotNetCore.Models
 {
@@ -10,5 +11,9 @@ namespace learnAspDotNetCore.Models
         }
         public DbSet<Employee> Empployees { get; set;}
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
     }
 }
