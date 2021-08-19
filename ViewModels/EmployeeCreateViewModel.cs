@@ -1,5 +1,6 @@
 ﻿using learnAspDotNetCore.Models;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace learnAspDotNetCore.ViewModels
@@ -20,6 +21,6 @@ namespace learnAspDotNetCore.ViewModels
         [Required]
         public Departement? Departement { get; set; }
 
-        public IFormFile Image{ get; set; }
+        public List<IFormFile> Images{ get; set; }
     }
 }

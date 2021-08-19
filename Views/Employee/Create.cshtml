@@ -23,8 +23,8 @@
         <span asp-validation-for="Departement" class="small text-danger"></span>
     </div>
     <div class="col-md-4 my-3">
-        <label class="form-label" asp-for="Image"></label>
-        <input type="file" accept="image/*" class="form-control" id="inputGroupFile01" asp-for="Image">
+        <label class="form-label" asp-for="Images"></label>
+        <input type="file" multiple accept="image/*" class="form-control" id="inputGroupFile01" asp-for="Images">
     </div>
     <div class="col-12 my-2">
         <button type="submit" class="btn btn-primary">Add</button>
@@ -33,3 +33,18 @@
 </form>
 
 
+@section scriptJS{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#inputGroupFile01").on("change",function(){
+                var inputFiles=$(this)[0].files;
+                if(inputFiles.length==1){
+                    console.log("one");
+                }
+                else{
+                    console.log(inputFiles);
+                }
+            });
+        });
+    </script>
+}

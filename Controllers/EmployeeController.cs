@@ -2,6 +2,7 @@
 using learnAspDotNetCore.Models.Repositories;
 using learnAspDotNetCore.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ namespace learnAspDotNetCore.Controllers
     public class EmployeeController:Controller
     {
         private readonly ICompanyRepository<Employee> _employee;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public EmployeeController(ICompanyRepository<Employee> employee, IHostingEnvironment hostingEnvironment)
+        public EmployeeController(ICompanyRepository<Employee> employee, IWebHostEnvironment webHostEnvironment)
         {
             this._employee = employee;
-            this.hostingEnvironment = hostingEnvironment;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public ViewResult Index()
@@ -46,12 +47,22 @@ namespace learnAspDotNetCore.Controllers
             if (ModelState.IsValid)
             {
                 string fileName = null;
-                if (model.Image!=null)
+                if (model.Images!=null || model.Images.Count>0)
                 {
-                    string path = Path.Combine(hostingEnvironment.WebRootPath, "Images");
-                    fileName = Guid.NewGuid() + "_" + model.Image.FileName;
-                    path = Path.Combine(path,fileName);
-                    model.Image.CopyTo(new FileStream(path, FileMode.Create));
+                    
+                    foreach (IFormFile file in model.Images)
+                    {
+                        string extFile = Path.GetExtension(file.FileName);
+                        if (extFile!=".png" && extFile != ".jpg")
+                        {
+                            ModelState.AddModelError("", "Invalid file format");
+                            return View(model);
+                        }
+                        string path = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                        fileName = Guid.NewGuid() + "_" + file.FileName;
+                        path = Path.Combine(path, fileName);
+                        file.CopyTo(new FileStream(path, FileMode.Create));
+                    }
                 }
                 Employee emp = new Employee() {
                     Email = model.Email,
@@ -62,7 +73,7 @@ namespace learnAspDotNetCore.Controllers
                 _employee.Add(emp);
                 return RedirectToAction("Details", new { id = emp.Id });
             }
-            return View();
+            return View(model);
         }
     }
 }
