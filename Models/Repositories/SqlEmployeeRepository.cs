@@ -15,6 +15,10 @@ namespace learnAspDotNetCore.Models.Repositories
         }
         public Employee Add(Employee entity)
         {
+            if (entity.ImageUrl is null)
+            {
+                entity.ImageUrl = "default.png";
+            }
             this.context.Empployees.Add(entity);
             this.context.SaveChanges();
             return entity;

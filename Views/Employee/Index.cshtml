@@ -8,9 +8,10 @@
 <div class="row">
     @foreach(Employee item in Model)
     {
+        var imageUrl = "/images/" + (item.ImageUrl??"default.png");
         <div class="col-12 col-sm-6 mb-2 col-lg-4">
             <div  class="card">
-                <img asp-append-version="true" src="@item.ImageUrl" alt="@item.Name" class="card-img-top" width="50" height=210 style="object-fit: cover"/>
+                <img asp-append-version="true" src="@imageUrl" alt="@item.Name" class="card-img-top" width="50" height=210 style="object-fit: cover"/>
                 <div class="card-body text-center">
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">

@@ -1,9 +1,9 @@
-﻿@model Employee
+﻿@model EmployeeCreateViewModel
 
 @{
     ViewBag.Title = "Create";
 }
-<form asp-action="Create" asp-controller="Employee" method="post">
+<form asp-action="Create" asp-controller="Employee" method="post" enctype="multipart/form-data">
     <div class="col-md-6">
         <label class="form-label" asp-for="Name"></label>
         <input type="text" class="form-control" asp-for="Name">
@@ -22,8 +22,14 @@
         </select>
         <span asp-validation-for="Departement" class="small text-danger"></span>
     </div>
+    <div class="col-md-4 my-3">
+        <label class="form-label" asp-for="Image"></label>
+        <input type="file" accept="image/*" class="form-control" id="inputGroupFile01" asp-for="Image">
+    </div>
     <div class="col-12 my-2">
         <button type="submit" class="btn btn-primary">Add</button>
     </div>
     <div class="text text-danger" asp-validation-summary="All"></div>
 </form>
+
+

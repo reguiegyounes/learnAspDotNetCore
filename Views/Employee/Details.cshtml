@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    var imageUrl = "/images/" + (Model.ImageUrl??"default.png");
 }
 
 
@@ -13,7 +14,7 @@
         <div  class="card">
             <h5 class="card-header text-danger display-3 text-center">@Model.Name</h5>
             <div class="text-center">
-                <img asp-append-version="true" src="@Model.ImageUrl" alt="@Model.Name" class="card-img-top" style="width:40%;height:40%; object-fit: cover"/>
+                <img asp-append-version="true" src="@imageUrl" alt="@Model.Name" class="card-img-top" style="width:40%;height:40%; object-fit: cover"/>
             </div>
             <div class="card-body text-center">
                 <p class="card-text display-4">
