@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace learnAspDotNetCore.Controllers
 {
@@ -47,22 +48,18 @@ namespace learnAspDotNetCore.Controllers
             if (ModelState.IsValid)
             {
                 string fileName = null;
-                if (model.Images!=null || model.Images.Count>0)
+                if (model.Image!=null)
                 {
-                    
-                    foreach (IFormFile file in model.Images)
+                    string extFile = Path.GetExtension(model.Image.FileName);
+                    if (extFile != ".png" && extFile != ".jpg")
                     {
-                        string extFile = Path.GetExtension(file.FileName);
-                        if (extFile!=".png" && extFile != ".jpg")
-                        {
-                            ModelState.AddModelError("", "Invalid file format");
-                            return View(model);
-                        }
-                        string path = Path.Combine(webHostEnvironment.WebRootPath, "Images");
-                        fileName = Guid.NewGuid() + "_" + file.FileName;
-                        path = Path.Combine(path, fileName);
-                        file.CopyTo(new FileStream(path, FileMode.Create));
+                        ModelState.AddModelError("", "Invalid file format");
+                        return View(model);
                     }
+                    string path = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                    fileName = Guid.NewGuid() + "_" + model.Image.FileName;
+                    path = Path.Combine(path, fileName);
+                    model.Image.CopyTo(new FileStream(path, FileMode.Create));
                 }
                 Employee emp = new Employee() {
                     Email = model.Email,
@@ -74,6 +71,25 @@ namespace learnAspDotNetCore.Controllers
                 return RedirectToAction("Details", new { id = emp.Id });
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Employee employee=_employee.Get(id);
+            if (employee!=null)
+            {
+                EmployeeEditViewModel model = new EmployeeEditViewModel()
+                {
+                    Id = employee.Id,
+                    imageOldPath = employee.ImageUrl,
+                    Name= employee.Name,
+                    Email = employee.Email,
+                    Departement = employee.Departement,
+                };
+                return View(model);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

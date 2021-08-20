@@ -7,7 +7,7 @@ namespace learnAspDotNetCore.ViewModels
 {
     public class EmployeeCreateViewModel
     {
-        public int Id { get; set; }
+        
 
         [Required]
         [MaxLength(100)]
@@ -21,6 +21,6 @@ namespace learnAspDotNetCore.ViewModels
         [Required]
         public Departement? Departement { get; set; }
 
-        public List<IFormFile> Images{ get; set; }
+        public IFormFile Image{ get; set; }
     }
 }
