@@ -27,7 +27,7 @@ namespace learnAspDotNetCore.Models.Repositories
             return employee;
         }
 
-        public Employee delete(int id)
+        public Employee Delete(int id)
         {
             var employee=_employees.Find(emp=>emp.Id==id);
             if (employee != null)
@@ -47,7 +47,7 @@ namespace learnAspDotNetCore.Models.Repositories
             return _employees;
         }
 
-        public Employee update(Employee entity)
+        public Employee Update(Employee entity)
         {
             var employee = _employees.Find(emp => emp.Id == entity.Id);
             if (employee != null)

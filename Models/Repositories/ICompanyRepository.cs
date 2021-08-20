@@ -7,7 +7,7 @@ namespace learnAspDotNetCore.Models.Repositories
         TEntity Get(int id); 
         IEnumerable<Employee> GetAll();
         TEntity Add(TEntity entity);
-        TEntity update(TEntity entity);
-        TEntity delete(int id);
+        TEntity Update(TEntity entity);
+        TEntity Delete(int id);
     }
 }

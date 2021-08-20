@@ -20,7 +20,7 @@ namespace learnAspDotNetCore.Models.Repositories
             return entity;
         }
 
-        public Employee delete(int id)
+        public Employee Delete(int id)
         {
             var employee=Get(id);
             if (employee != null) {
@@ -40,7 +40,7 @@ namespace learnAspDotNetCore.Models.Repositories
             return this.context.Empployees;
         }
 
-        public Employee update(Employee entity)
+        public Employee Update(Employee entity)
         {
             var employee = this.context.Empployees.Attach(entity);
             employee.State = EntityState.Modified;
