@@ -34,6 +34,10 @@ namespace learnAspDotNetCore
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
 
             app.UseFileServer();
             app.UseMvc(routes => {
