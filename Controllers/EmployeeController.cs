@@ -33,6 +33,9 @@ namespace learnAspDotNetCore.Controllers
                 return RedirectToAction("Index");
             }
             Employee emp = _employee.Get(id ?? 1);
+            if(emp == null){
+                return View("NotFoundError",id);
+            }
             return View(emp);
         }
         [HttpGet]
@@ -72,6 +75,10 @@ namespace learnAspDotNetCore.Controllers
         public IActionResult Edit(int id)
         {
             Employee employee=_employee.Get(id);
+            if (employee == null)
+            {
+                return View("NotFoundError", id);
+            }
             if (employee!=null)
             {
                 EmployeeEditViewModel model = new EmployeeEditViewModel()
