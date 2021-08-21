@@ -31,5 +31,14 @@ namespace learnAspDotNetCore.Controllers
             ViewBag.StatusCode=StatusCode.ToString();
             return View("NotFound",model);
         }
+
+        [Route("Error")]
+        public IActionResult Error()
+        {
+            var exceptionStatus = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.Message = exceptionStatus.Error.Message;
+            ViewBag.Path = exceptionStatus.Path;
+            return View();
+        }
     }
 }
