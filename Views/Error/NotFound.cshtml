@@ -11,13 +11,7 @@
                 <div class="mb-4 lead">
                     <span class=text-danger>@Model.Message</span>
                 </div>
-                <p>
-                    Path : @Model.Path <br/>
-                    @if(!string.IsNullOrEmpty(Model.QueryStrings)){
-                        <span>Query Strings : @Model.QueryStrings</span>
-                    }
-                </p>
-
+                <hr />
                 <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-dark">Back to Home Page</a>
             </div>
         </div>

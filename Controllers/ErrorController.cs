@@ -1,11 +1,19 @@
 ﻿using learnAspDotNetCore.Models.Types;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace learnAspDotNetCore.Controllers
 {
     public class ErrorController : Controller
     {
+        private readonly ILogger<ErrorController> logger;
+
+        public ErrorController(ILogger<ErrorController> logger)
+        {
+            this.logger = logger;
+        }
+
         [Route("/Error/{StatusCode}")]
         public IActionResult Index(int StatusCode)
         {
@@ -16,15 +24,13 @@ namespace learnAspDotNetCore.Controllers
                 case 404:
                     {
                         model.Message = "Sorry , The resource you requested could not be found.";
-                        model.Path = statusResult.OriginalPath;
-                        model.QueryStrings = statusResult.OriginalQueryString;
+                        this.logger.LogWarning($"404 error accured. Path = {statusResult.OriginalPath} and QueryString = {statusResult.OriginalQueryString}");
                     }
                     break;
                 default:
                     {
                         model.Message = "This page cannot be found";
-                        model.Path = statusResult.OriginalPath;
-                        model.QueryStrings = statusResult.OriginalQueryString;
+                        this.logger.LogWarning($"{StatusCode} error accured. Path = {statusResult.OriginalPath} and QueryString = {statusResult.OriginalQueryString}");
                     }
                      break;
             }
@@ -36,8 +42,7 @@ namespace learnAspDotNetCore.Controllers
         public IActionResult Error()
         {
             var exceptionStatus = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-            ViewBag.Message = exceptionStatus.Error.Message;
-            ViewBag.Path = exceptionStatus.Path;
+            this.logger.LogError($"The Path : {exceptionStatus.Path} throw an exception {exceptionStatus.Error}");
             return View();
         }
     }
