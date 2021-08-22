@@ -2,6 +2,7 @@ using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ namespace learnAspDotNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("EmployeeDbConnection")));
+            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddMvc(option => option.EnableEndpointRouting = false ) ;
             services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();
         }
@@ -41,6 +43,7 @@ namespace learnAspDotNetCore
             }
 
             app.UseFileServer();
+            app.UseAuthentication();
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
