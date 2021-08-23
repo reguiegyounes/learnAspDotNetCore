@@ -25,7 +25,7 @@ namespace learnAspDotNetCore
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("EmployeeDbConnection")));
 
-            // Change Password Complexity : 01
+            // Change Password Complexity
             services.AddIdentity<IdentityUser,IdentityRole>(options => {
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = false;
@@ -33,15 +33,6 @@ namespace learnAspDotNetCore
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<AppDbContext>();
-
-            /* Change Password Complexity : 02
-            services.Configure<IdentityOptions>(options => {
-                options.Password.RequiredLength = 3;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-            });*/
 
             services.AddMvc(option => option.EnableEndpointRouting = false ) ;
             services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();

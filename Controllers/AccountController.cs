@@ -24,6 +24,13 @@ namespace learnAspDotNetCore.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Employee");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(AccountRegisterViewModel model)
         {
