@@ -31,15 +31,34 @@ namespace learnAspDotNetCore.Controllers
             return RedirectToAction("Index", "Employee");
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(AccountLoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result=await signInManager.PasswordSignInAsync(model.Email, model.Password,model.RememberMe,false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Employee");
+                }
+                ModelState.AddModelError("", "Login invalid attempt");
+            }
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(AccountRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                string username= GenerateUsername(model.FirstName, model.LastName);
                 IdentityUser user = new IdentityUser()
                 {
-                    UserName = username,
+                    UserName = model.Email,
                     Email = model.Email
                 };
 
