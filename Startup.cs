@@ -24,7 +24,25 @@ namespace learnAspDotNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("EmployeeDbConnection")));
-            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+            // Change Password Complexity : 01
+            services.AddIdentity<IdentityUser,IdentityRole>(options => {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+            /* Change Password Complexity : 02
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            });*/
+
             services.AddMvc(option => option.EnableEndpointRouting = false ) ;
             services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();
         }
