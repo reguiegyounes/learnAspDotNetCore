@@ -88,8 +88,15 @@ namespace learnAspDotNetCore.Controllers
             }
             return View(model);
         }
-
-        private string GenerateUsername(string firstName ,string lastName)
+        [AllowAnonymous]
+        [AcceptVerbs("Get","Post")]
+        public async Task<IActionResult> CheckingExistingEmail(AccountLoginViewModel model)
+        { 
+            var user=await userManager.FindByEmailAsync(model.Email);
+            if (user == null) return Json(true);
+            else return Json($"This email {model.Email} is already exist.");
+        }
+            private string GenerateUsername(string firstName ,string lastName)
         {
             return firstName.Trim() + "_" + lastName.Trim();
         }

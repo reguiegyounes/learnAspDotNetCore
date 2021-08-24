@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace learnAspDotNetCore.ViewModels
 
         [Required]
         [DataType(DataType.EmailAddress)]
+        [Remote(action: "CheckingExistingEmail", controller:"Account")]
         public string Email { get; set; }
 
         [Required]
