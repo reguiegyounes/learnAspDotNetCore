@@ -1,6 +1,7 @@
 ﻿using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
 using learnAspDotNetCore.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.IO;
 
 namespace learnAspDotNetCore.Controllers
 {
+    
     public class EmployeeController:Controller
     {
         private readonly ICompanyRepository<Employee> _employee;
@@ -20,12 +22,14 @@ namespace learnAspDotNetCore.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
+        [AllowAnonymous]
         public ViewResult Index()
         {
             IEnumerable<Employee> employees = _employee.GetAll();
             return View(employees);
         }
 
+        [AllowAnonymous]
         public IActionResult Details(int? id)
         {
             if (id is null)

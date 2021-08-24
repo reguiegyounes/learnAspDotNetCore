@@ -1,8 +1,10 @@
 using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,8 +36,13 @@ namespace learnAspDotNetCore
                 options.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddMvc(option => option.EnableEndpointRouting = false ) ;
+            services.AddMvc(option => {
+                option.EnableEndpointRouting = false;
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                option.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();
+            services.ConfigureApplicationCookie(option=>option.LoginPath="/Account/Login"); // default path : /Account/Login
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
 ﻿using learnAspDotNetCore.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace learnAspDotNetCore.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -32,11 +34,13 @@ namespace learnAspDotNetCore.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(AccountLoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -52,6 +56,7 @@ namespace learnAspDotNetCore.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(AccountRegisterViewModel model)
         {
             if (ModelState.IsValid)
