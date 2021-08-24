@@ -41,14 +41,21 @@ namespace learnAspDotNetCore.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(AccountLoginViewModel model)
+        public async Task<IActionResult> Login(AccountLoginViewModel model ,string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
                 var result=await signInManager.PasswordSignInAsync(model.Email, model.Password,model.RememberMe,false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Employee");
+                    if (string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return RedirectToAction("Index", "Employee");
+                    }
+                    else
+                    {
+                        return Redirect(ReturnUrl);
+                    }
                 }
                 ModelState.AddModelError("", "Login invalid attempt");
             }
