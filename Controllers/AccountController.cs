@@ -48,13 +48,13 @@ namespace learnAspDotNetCore.Controllers
                 var result=await signInManager.PasswordSignInAsync(model.Email, model.Password,model.RememberMe,false);
                 if (result.Succeeded)
                 {
-                    if (string.IsNullOrEmpty(ReturnUrl))
+                    if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
                     {
-                        return RedirectToAction("Index", "Employee");
+                        return LocalRedirect(ReturnUrl);
                     }
                     else
                     {
-                        return Redirect(ReturnUrl);
+                        return RedirectToAction("Index", "Employee");
                     }
                 }
                 ModelState.AddModelError("", "Login invalid attempt");
