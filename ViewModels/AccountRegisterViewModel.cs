@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using learnAspDotNetCore.Tools;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,7 @@ namespace learnAspDotNetCore.ViewModels
         [Required]
         [DataType(DataType.EmailAddress)]
         [Remote(action: "CheckingExistingEmail", controller:"Account")]
+        [ValidEmailDomainAttribute(Domain:"gmail.com,outlook.com")]
         public string Email { get; set; }
 
         [Required]
