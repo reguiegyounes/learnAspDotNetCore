@@ -1,4 +1,5 @@
-﻿using learnAspDotNetCore.ViewModels;
+﻿using learnAspDotNetCore.Models;
+using learnAspDotNetCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,11 @@ namespace learnAspDotNetCore.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-                                SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager,
+                                SignInManager<AppUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -68,10 +69,12 @@ namespace learnAspDotNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = new IdentityUser()
+                AppUser user = new AppUser()
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
                 };
 
                 var result =await userManager.CreateAsync(user,model.Password);
@@ -96,9 +99,6 @@ namespace learnAspDotNetCore.Controllers
             if (user == null) return Json(true);
             else return Json($"This email {model.Email} is already exist.");
         }
-            private string GenerateUsername(string firstName ,string lastName)
-        {
-            return firstName.Trim() + "_" + lastName.Trim();
-        }
+          
     }
 }

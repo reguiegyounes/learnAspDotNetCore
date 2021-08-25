@@ -28,7 +28,7 @@ namespace learnAspDotNetCore
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("EmployeeDbConnection")));
 
             // Change Password Complexity
-            services.AddIdentity<IdentityUser,IdentityRole>(options => {
+            services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;

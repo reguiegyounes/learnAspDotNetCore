@@ -1,4 +1,15 @@
-﻿@inject SignInManager<IdentityUser> signInManager
+﻿@inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser> userManager
+
+@{ string fullName = null;
+    if(signInManager.IsSignedIn(User)){
+        AppUser user =await userManager.FindByEmailAsync(User.Identity.Name);
+        if (user!=null)
+        {
+            fullName = (user.FirstName??string.Empty).ToUpper() + " " + (user.LastName??string.Empty).ToLower();
+        }
+    }
+}
 
 <DOCTYPE html>
 <html>
@@ -39,8 +50,10 @@
               </ul>
                  <ul class="navbar-nav d-flex">
                      @if(signInManager.IsSignedIn(User)){
+                            if (fullName == null) fullName = User.Identity.Name;
+
                         <li class="nav-item">
-                            <a class="nav-link btn" asp-action="Logout" asp-controller="Account">Logout @User.Identity.Name</a>
+                            <a class="nav-link btn" asp-action="Logout" asp-controller="Account">Logout @fullName</a>
                         </li>
                     }
                     else
