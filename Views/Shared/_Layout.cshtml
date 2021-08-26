@@ -1,14 +1,7 @@
 ﻿@inject SignInManager<AppUser> signInManager
 @inject UserManager<AppUser> userManager
 
-@{ string fullName = null;
-    if(signInManager.IsSignedIn(User)){
-        AppUser user =await userManager.FindByEmailAsync(User.Identity.Name);
-        if (user!=null)
-        {
-            fullName = (user.FirstName??string.Empty).ToUpper() + " " + (user.LastName??string.Empty).ToLower();
-        }
-    }
+@{ 
 }
 
 <DOCTYPE html>
@@ -48,13 +41,26 @@
                   <a class="nav-link active" asp-action="Create" asp-controller="Employee">Create Employee</a>
                 </li>
               </ul>
-                 <ul class="navbar-nav d-flex">
-                     @if(signInManager.IsSignedIn(User)){
-                            if (fullName == null) fullName = User.Identity.Name;
+                <ul class="navbar-nav d-flex">
+                    @if(signInManager.IsSignedIn(User)){
+                        string fullName = null;
+                        AppUser user =await userManager.FindByEmailAsync(User.Identity.Name);
+                        if (user!=null)
+                        {
+                            fullName = (user.FirstName??string.Empty).ToUpper() + " " + (user.LastName??string.Empty).ToLower();
+                        }
+                        if (fullName == null || fullName.Trim()=="") fullName = User.Identity.Name;
 
-                        <li class="nav-item">
-                            <a class="nav-link btn" asp-action="Logout" asp-controller="Account">Logout @fullName</a>
+                        <li class="nav-item dropstart">
+                            <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @fullName
+                              </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Edit" asp-controller="Account" asp-route-id="@user.Id">Edit Profile</a></li>
+                                <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
+                            </ul>
                         </li>
+                    
                     }
                     else
                     {
@@ -65,7 +71,6 @@
                             <a class="nav-link btn-link" asp-action="Register" asp-controller="Account">Register</a>
                         </li>  
                     }
-                     
                 </ul>
             </div>
           </div>

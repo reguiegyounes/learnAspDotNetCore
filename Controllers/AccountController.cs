@@ -99,6 +99,54 @@ namespace learnAspDotNetCore.Controllers
             if (user == null) return Json(true);
             else return Json($"This email {model.Email} is already exist.");
         }
-          
+        
+        [HttpGet]
+        public async  Task<IActionResult> Edit(string id)
+        {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                AppUser user = await userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    AccountEditViewModel model = new AccountEditViewModel()
+                    {
+                        Id = user.Id,
+                        FirstName=user.FirstName,
+                        LastName=user.LastName
+                    };
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Index","Employee");
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> Edit(AccountEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await userManager.FindByIdAsync(model.Id);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+
+                    var passwordHash = userManager.PasswordHasher.HashPassword(user, model.Password);
+                    user.PasswordHash = passwordHash;
+                    
+
+                    IdentityResult result =await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Employee");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
+        }
     }
 }
