@@ -34,7 +34,7 @@ namespace learnAspDotNetCore.Controllers
                 IdentityResult result=await roleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(actionName: "Index", controllerName: "Employee");
+                    return RedirectToAction(actionName: "Roles");
                 }
                 foreach (IdentityError error in result.Errors)
                 {
@@ -42,6 +42,12 @@ namespace learnAspDotNetCore.Controllers
                 }
             }
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult Roles()
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
         }
     }
 }
