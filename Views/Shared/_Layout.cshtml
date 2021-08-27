@@ -56,7 +56,12 @@
                                 @fullName
                               </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-action="Edit" asp-controller="Account" asp-route-id="@user.Id">Edit Profile</a></li>
+                                <li>
+                                    @using(Html.BeginForm("Edit","Account",FormMethod.Get)){
+                                        <input type="text" name="Id" value="@user.Id" class="form-control" hidden/>
+                                        <input type="submit" value="Edit Account" class="dropdown-item">
+                                    }
+                                </li>
                                 <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
                             </ul>
                         </li>

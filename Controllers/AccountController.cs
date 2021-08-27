@@ -101,11 +101,11 @@ namespace learnAspDotNetCore.Controllers
         }
         
         [HttpGet]
-        public async  Task<IActionResult> Edit(string id)
+        public async  Task<IActionResult> Edit(AccountGetEditBody data)
         {
-            if (!string.IsNullOrWhiteSpace(id))
+            if (!string.IsNullOrWhiteSpace(data.Id))
             {
-                AppUser user = await userManager.FindByIdAsync(id);
+                AppUser user = await userManager.FindByIdAsync(data.Id);
                 if (user != null)
                 {
                     AccountEditViewModel model = new AccountEditViewModel()
