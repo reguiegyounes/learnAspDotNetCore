@@ -1,4 +1,4 @@
-﻿@model learnAspDotNetCore.ViewModels.EditRoleViewModel
+﻿@model EditRoleViewModel
 
 @{
     ViewBag.Title= "Edit";
@@ -26,10 +26,9 @@
                     <h5 class="card-title">List Users</h5>
                     <hr/>
                     <p class="card-text">
-
                         @if (Model.Users.Count == 0)
                         {
-                                <span class=text-danger>List is empty</span> <hr/>
+                            <span class=text-danger>List is empty</span> <hr/>
                         }
                         else
                         {
@@ -40,7 +39,7 @@
                         }
                     <p/>
                     <div class="text-white">
-                        <a class="btn btn-sm my-auto btn-primary">Add Users</a>
+                        <a class="btn btn-sm my-auto btn-primary" asp-controller="Administration" asp-action="EditUsersRole" asp-route-idRole="@Model.Id">Add/Remove Users</a>
                         <a class="btn btn-sm btn-dark" asp-action="Roles">Back to Roles</a>
                     </div>
                 </div>

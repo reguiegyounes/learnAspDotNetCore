@@ -123,5 +123,73 @@ namespace learnAspDotNetCore.Controllers
             if (role == null) return Json(true);
             else return Json($"This role name ( {model.RoleName} ) is already exist.");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUsersRole(string idRole)
+        {
+            if (string.IsNullOrEmpty(idRole))
+            {
+                return View("NotFound", $"The role must be exist and not empty in URL !.");
+            }
+            var role = await roleManager.FindByIdAsync(idRole);
+            if (role == null )
+            {
+                return View("NotFound", $"The Role as ID {idRole} cannot be found");
+            }
+
+            List<EditUsersRoleViewModel> models=new List<EditUsersRoleViewModel>();
+            foreach (AppUser user in userManager.Users)
+            {
+                EditUsersRoleViewModel model = new EditUsersRoleViewModel()
+                {
+                    UserId=user.Id,
+                    UserName=user.UserName,
+                    IsSelected=false
+                };
+                if (await userManager.IsInRoleAsync(user,role.Name))
+                {
+                    model.IsSelected=true;
+                }
+                models.Add(model);
+            }
+            ViewBag.IdRole=idRole;
+            ViewBag.RoleName = role.Name;
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUsersRole(List<EditUsersRoleViewModel> models,string idRole)
+        {
+            if (string.IsNullOrEmpty(idRole))
+            {
+                return View("NotFound", $"The role must be exist and not empty in URL !.");
+            }
+            var role = await roleManager.FindByIdAsync(idRole);
+            if (role == null)
+            {
+                return View("NotFound", $"The Role as ID {idRole} cannot be found");
+            }
+            foreach (var model in models)
+            {
+                IdentityResult result = null;
+                AppUser user=await userManager.FindByIdAsync(model.UserId);
+                if (await userManager.IsInRoleAsync(user,role.Name) && !model.IsSelected)
+                {
+                    result=await userManager.RemoveFromRoleAsync(user,role.Name);
+                }
+                else if (!(await userManager.IsInRoleAsync(user, role.Name)) && model.IsSelected)
+                {
+                    result=await userManager.AddToRoleAsync(user,role.Name);
+                }
+                if (result != null && !result.Succeeded) {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return RedirectToAction(nameof(Edit),new { id = idRole });
+        }
     }
 }
+
