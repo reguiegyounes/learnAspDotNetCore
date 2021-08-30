@@ -40,7 +40,16 @@
                 <li class="nav-item">
                   <a class="nav-link active" asp-action="Create" asp-controller="Employee">Create Employee</a>
                 </li>
-              </ul>
+                @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manage Roles</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-action="Roles" asp-controller="Administration">Roles</a></li>
+                            <li><a class="dropdown-item" asp-action="" asp-controller="Administration">Users</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
                 <ul class="navbar-nav d-flex">
                     @if(signInManager.IsSignedIn(User)){
                         string fullName = null;

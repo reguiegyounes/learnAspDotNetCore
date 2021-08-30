@@ -1,6 +1,7 @@
 ﻿using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Types;
 using learnAspDotNetCore.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace learnAspDotNetCore.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

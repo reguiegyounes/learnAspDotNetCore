@@ -148,5 +148,17 @@ namespace learnAspDotNetCore.Controllers
             }
             return View(model);
         }
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+            {
+                ViewBag.ReturnUrl = ReturnUrl;
+            }
+            else
+            {
+                ViewBag.ReturnUrl = "";
+            }
+            return View();
+        }
     }
 }
