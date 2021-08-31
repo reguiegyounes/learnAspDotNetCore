@@ -1,3 +1,4 @@
+using learnAspDotNetCore.Extensions;
 using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -60,6 +61,7 @@ namespace learnAspDotNetCore
 
             app.UseFileServer();
             app.UseAuthentication();
+            app.RefreshLogin();
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
