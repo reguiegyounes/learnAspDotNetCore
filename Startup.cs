@@ -1,6 +1,7 @@
 using learnAspDotNetCore.Extensions;
 using learnAspDotNetCore.Models;
 using learnAspDotNetCore.Models.Repositories;
+using learnAspDotNetCore.Tools;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,7 @@ namespace learnAspDotNetCore
                 option.EnableEndpointRouting = false;
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 option.Filters.Add(new AuthorizeFilter(policy));
+                option.Filters.Add(new RefreshLoginFilter());
             });
             services.AddScoped<ICompanyRepository<Employee>, SqlEmployeeRepository>();
             services.ConfigureApplicationCookie(option=>option.LoginPath="/Account/Login"); // default path : /Account/Login
@@ -61,7 +63,7 @@ namespace learnAspDotNetCore
 
             app.UseFileServer();
             app.UseAuthentication();
-            app.RefreshLogin();
+            
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
