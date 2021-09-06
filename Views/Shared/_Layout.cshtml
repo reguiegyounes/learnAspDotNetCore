@@ -10,6 +10,7 @@
         <title>@ViewBag.Title | Employees Management</title>
         <environment include="Development">
             <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet">
         </environment>
         <environment include="Production,Staging">
             <link   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
@@ -20,7 +21,9 @@
                     asp-fallback-test-property="position"
                     asp-fallback-test-value="abslute"
                     asp-suppress-fallback-integrity="true">
+            <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
         </environment>
+        
         <link rel="icon" type="image/x-icon" href="/Images/logo.png" asp-append-version="true"  />
     </head>
     <body>
@@ -45,7 +48,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Manage Roles</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-action="Roles" asp-controller="Administration">Roles</a></li>
-                            <li><a class="dropdown-item" asp-action="" asp-controller="Administration">Users</a></li>
+                            <li><a class="dropdown-item" asp-action="Users" asp-controller="Account">Users</a></li>
                         </ul>
                     </li>
                 }
@@ -98,12 +101,15 @@
             <script src="~/lib/jquery/jquery.js"></script>
             <script src="~/lib/jquery-validate/jquery.validate.js"></script>
             <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
         </environment>
         <environment exclude="Development">
             <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
             <script src="~/lib/jquery/jquery.min.js"></script>
             <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
             <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
         </environment>
+        @RenderSection(name:"DTListUsers",required:false)
     </body>
 </html>

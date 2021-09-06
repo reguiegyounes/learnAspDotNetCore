@@ -56,7 +56,7 @@ namespace learnAspDotNetCore.Controllers
                 if (model.Image!=null)
                 {
                     string extFile = Path.GetExtension(model.Image.FileName);
-                    if (extFile != ".png" && extFile != ".jpg")
+                    if (extFile.ToLower() != ".png" && extFile.ToLower() != ".jpg")
                     {
                         ModelState.AddModelError("", "Invalid file format");
                         return View(model);

@@ -3,6 +3,7 @@ using learnAspDotNetCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace learnAspDotNetCore.Controllers
@@ -80,6 +81,10 @@ namespace learnAspDotNetCore.Controllers
                 var result =await userManager.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
+                    if (User.IsInRole("Admin") && signInManager.IsSignedIn(User))
+                    {
+                        return RedirectToAction(nameof(Users));
+                    }
                     await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index","Employee");
                 }
@@ -159,6 +164,14 @@ namespace learnAspDotNetCore.Controllers
                 ViewBag.ReturnUrl = "";
             }
             return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles= "Admin")]
+        public IActionResult Users()
+        {
+            var users = userManager.Users.Where(user => user.Email!=User.Identity.Name);
+            return View(users);
         }
     }
 }
