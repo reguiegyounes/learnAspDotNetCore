@@ -353,3 +353,5 @@ MigrationBackup/
 
 # libraries from libman.json file
 wwwroot/lib
+wwwroot/lib/bootstrap
+wwwroot/lib/jquery
