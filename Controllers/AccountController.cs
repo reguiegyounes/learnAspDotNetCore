@@ -43,11 +43,11 @@ namespace learnAspDotNetCore.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(AccountLoginViewModel model ,string ReturnUrl)
+        public async Task<IActionResult> Login(AccountLoginViewModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
-                var result=await signInManager.PasswordSignInAsync(model.Email, model.Password,model.RememberMe,false);
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
@@ -78,7 +78,7 @@ namespace learnAspDotNetCore.Controllers
                     LastName = model.LastName
                 };
 
-                var result =await userManager.CreateAsync(user,model.Password);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     if (User.IsInRole("Admin") && signInManager.IsSignedIn(User))
@@ -86,27 +86,27 @@ namespace learnAspDotNetCore.Controllers
                         return RedirectToAction(nameof(Users));
                     }
                     await signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index","Employee");
+                    return RedirectToAction("Index", "Employee");
                 }
-                
+
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("",error.Description);
+                    ModelState.AddModelError("", error.Description);
                 }
             }
             return View(model);
         }
         [AllowAnonymous]
-        [AcceptVerbs("Get","Post")]
+        [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckingExistingEmail(AccountLoginViewModel model)
-        { 
-            var user=await userManager.FindByEmailAsync(model.Email);
+        {
+            var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null) return Json(true);
             else return Json($"This email {model.Email} is already exist.");
         }
-        
+
         [HttpGet]
-        public async  Task<IActionResult> Edit(AccountGetEditBody data)
+        public async Task<IActionResult> Edit(AccountGetEditBody data)
         {
             if (!string.IsNullOrWhiteSpace(data.Id))
             {
@@ -116,17 +116,17 @@ namespace learnAspDotNetCore.Controllers
                     AccountEditViewModel model = new AccountEditViewModel()
                     {
                         Id = user.Id,
-                        FirstName=user.FirstName,
-                        LastName=user.LastName
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
                     };
                     return View(model);
                 }
             }
-            return RedirectToAction("Index","Employee");
+            return RedirectToAction("Index", "Employee");
         }
 
         [HttpPost]
-        public async  Task<IActionResult> Edit(AccountEditViewModel model)
+        public async Task<IActionResult> Edit(AccountEditViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -138,9 +138,9 @@ namespace learnAspDotNetCore.Controllers
 
                     var passwordHash = userManager.PasswordHasher.HashPassword(user, model.Password);
                     user.PasswordHash = passwordHash;
-                    
 
-                    IdentityResult result =await userManager.UpdateAsync(user);
+
+                    IdentityResult result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Employee");
@@ -167,11 +167,38 @@ namespace learnAspDotNetCore.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles= "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Users()
         {
-            var users = userManager.Users.Where(user => user.Email!=User.Identity.Name);
+            var users = userManager.Users.Where(user => user.Email != User.Identity.Name);
             return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return View("NotFound", $"The User ID must be exist and not empty in URL !.");
+            }
+
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return View("NotFound", $"The User as ID {id} cannot be found");
+            }
+
+            var userRoles = await userManager.GetRolesAsync(user);
+            var userClaims= await userManager.GetClaimsAsync(user);
+
+            AccountEditUserViewModel model = new AccountEditUserViewModel() {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Roles = userRoles,
+                Claims = userClaims.Select(c => c.Value).ToList()
+            };
+            return View(model) ;
         }
     }
 }
