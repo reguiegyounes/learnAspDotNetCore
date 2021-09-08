@@ -6,11 +6,11 @@
 }
 
 
-<div class="my-5">
+<div class="my-1">
     <div class="text-info font-weight-normal display-3">List Of Users</div>
 </div>
 
-<div class="my-5">
+<div class="my-2">
     <table class="table" id="usersTable">
         <thead class="thead-dark table-over table-dark">
             <tr>
@@ -52,7 +52,7 @@
                         class="btn btn-dark mx-2 btn-sm" >
                             Edit
                         </a>
-                        <a asp-action="Delete" asp-controller="Account" asp-route-id="@user.Id"
+                        <a asp-action="DeleteUser" asp-controller="Account" asp-route-id="@user.Id"
                         class="btn btn-danger mx-2 btn-sm" >
                             Delete
                         </a>

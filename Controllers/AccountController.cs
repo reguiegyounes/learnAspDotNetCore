@@ -230,5 +230,25 @@ namespace learnAspDotNetCore.Controllers
             model.Claims = (await userManager.GetClaimsAsync(user)).Select(c=>c.Value).ToList();
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return View("NotFound", $"The User as ID {id} cannot be found");
+            }
+
+            IdentityResult result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return RedirectToAction(nameof(Users));
+        }
     }
 }
