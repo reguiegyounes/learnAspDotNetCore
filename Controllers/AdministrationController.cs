@@ -117,10 +117,13 @@ namespace learnAspDotNetCore.Controllers
             }
             return View(model);
         }
+
+        [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckingRoleName(EditRoleViewModel model)
         {
-            var role = await roleManager.FindByNameAsync(model.RoleName);
-            if (role == null) return Json(true);
+            var roleById = await roleManager.FindByIdAsync(model.Id);
+            var roleByName = await roleManager.FindByNameAsync(model.RoleName);
+            if (roleByName == null || roleById.Name==roleByName.Name) return Json(true);
             else return Json($"This role name ( {model.RoleName} ) is already exist.");
         }
 

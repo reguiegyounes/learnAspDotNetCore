@@ -200,5 +200,35 @@ namespace learnAspDotNetCore.Controllers
             };
             return View(model) ;
         }
+        [HttpPost]
+        public async Task<IActionResult> EditUser(AccountEditUserViewModel model)
+        {
+            AppUser user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                return View("NotFound", $"The User as ID {model.Id} cannot be found");
+            }
+            if (ModelState.IsValid)
+            {
+                user.LastName = model.LastName;
+                user.FirstName = model.FirstName;
+                user.Email = model.Email;
+                user.UserName = model.Email;
+
+                IdentityResult result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Users));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            model.Roles = await userManager.GetRolesAsync(user);
+            model.Claims = (await userManager.GetClaimsAsync(user)).Select(c=>c.Value).ToList();
+            return View(model);
+        }
     }
 }

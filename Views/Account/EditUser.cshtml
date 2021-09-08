@@ -30,8 +30,8 @@
             <div class="form-group my-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-
             <div class="text-danger" asp-validation-summary="All" ></div>
+            
 
             <div class="row">
                 <div class="col-md-6 col-12 mx-auto">
@@ -40,16 +40,16 @@
                             <h5 class="card-title">User Roles</h5>
                             <hr/>
                             <p class="card-text">
-                                @if (Model.Roles.Count == 0)
+                                @if(Model.Roles.Count == 0)
                                 {
                                     <span class=text-danger>List is empty</span> <hr/>
                                 }
                                 else
                                 {
                                     <ol class="active">
-                                        @foreach (string role in Model.Roles)
+                                        @for(int i=0;i<Model.Roles.Count;i++)
                                         {
-                                            <li class="display-6">@role</li>
+                                            <li class="display-6">@Model.Roles[i]</li>
                                         }
                                     </ol>
                                 }
@@ -68,30 +68,28 @@
                             <h5 class="card-title">User Claims</h5>
                             <hr/>
                             <p class="card-text">
-                                @if (Model.Claims.Count == 0)
+                                @if(Model.Claims.Count == 0)
                                 {
                                     <span class=text-danger>List is empty</span> <hr/>
                                 }
                                 else
                                 {
                                     <ol class="active">
-                                        @foreach (string claim in Model.Claims)
+                                        @for(int i=0;i<Model.Claims.Count;i++)
                                         {
-                                            <li class="display-6">@claim</li>
+                                            <li class="display-6">@Model.Claims[i]</li>
                                         }
                                     </ol>
                                 }
                             <p/>
                             <div class="text-white">
-                                <a class="btn btn-sm btn-dark" asp-action="Roles" asp-controller="Administration">Manage Roles</a>
+                                <a class="btn btn-sm btn-dark" asp-action="Roles" asp-controller="Administration">Manage Claims</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
         </form>
-        
     </div>
 </div>
 

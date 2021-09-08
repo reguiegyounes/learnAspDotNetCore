@@ -9,7 +9,7 @@ namespace learnAspDotNetCore.ViewModels
         public string Id { get; set; }
         [Required]
         [Display(Name ="Role Name")]
-        [Remote(action: "CheckingRoleName",controller: "Administration")]
+        [Remote(action: "CheckingRoleName",controller: "Administration", AdditionalFields="Id")]
         public string RoleName { get; set; }
         public List<string> Users { get; set; }
     }
